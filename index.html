@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube 3×3 Video Wall</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: black;
+            margin: 0;
+            overflow: hidden;
+        }
+        .video-wall {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 5px;
+            width: 90vw;
+            height: 90vh;
+            position: relative;
+        }
+        .video-container {
+            position: absolute;
+            width: calc(90vw / 3 - 5px);
+            height: calc(90vh / 3 - 5px);
+            cursor: pointer;
+            transition: all 0.5s ease-in-out;
+        }
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            pointer-events: none; /* Prevents iframe from blocking clicks */
+        }
+        .expanded {
+            width: 80vw !important;
+            height: 80vh !important;
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="video-wall" id="videoWall">
+        <!-- JavaScript will generate 3x3 autoplay videos -->
+    </div>
+
+    <script>
+        const videoWall = document.getElementById("videoWall");
+
+        // Your 9 YouTube Video IDs
+        const videoIds = [
+            "pamhhLu0utM", "1--0lGcnZm8", "2kjclezI0a4",
+            "bqvIMlBKNYY", "WyR_6xAa_Do", "QTzPPIwBzu4",
+            "_FR8gbgfUkU", "MokuKxMUge4", "FFvnZNj5bVQ"
+        ];
+
+        // Create 3x3 grid of autoplay YouTube videos
+        videoIds.forEach((id, index) => {
+            const col = index % 3;
+            const row = Math.floor(index / 3);
+
+            const videoDiv = document.createElement("div");
+            videoDiv.classList.add("video-container");
+            videoDiv.style.left = `${col * (90 / 3)}vw`;
+            videoDiv.style.top = `${row * (90 / 3)}vh`;
+
+            videoDiv.innerHTML = `
+                <iframe src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&enablejsapi=1" allowfullscreen></iframe>
+            `;
+            videoDiv.onclick = () => toggleVideo(videoDiv);
+            videoWall.appendChild(videoDiv);
+        });
+
+        let expandedVideo = null;
+
+        function toggleVideo(video) {
+            if (expandedVideo === video) {
+                // Shrink back to grid
+                video.classList.remove("expanded");
+                expandedVideo = null;
+                video.style.left = video.dataset.originalLeft;
+                video.style.top = video.dataset.originalTop;
+            } else {
+                // Store original position
+                video.dataset.originalLeft = video.style.left;
+                video.dataset.originalTop = video.style.top;
+
+                // Shrink any already expanded video
+                if (expandedVideo) {
+                    expandedVideo.classList.remove("expanded");
+                    expandedVideo.style.left = expandedVideo.dataset.originalLeft;
+                    expandedVideo.style.top = expandedVideo.dataset.originalTop;
+                }
+
+                // Expand selected video from its original position
+                video.classList.add("expanded");
+                video.style.left = "10vw";
+                video.style.top = "10vh";
+                expandedVideo = video;
+            }
+        }
+    </script>
+
+</body>
+</html>

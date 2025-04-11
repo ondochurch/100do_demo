@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube 3×3 Video Wall</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background: white;
+            margin: 0;
+            overflow: hidden;
+        }
+        .question-panel {
+            width: 100%;
+            padding: 10px;
+            background: black;
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            min-height: 50px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .video-wall {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 5px;
+            width: 90vw;
+            height: 90vh;
+            position: relative;
+        }
+        .video-container {
+            position: absolute;
+            width: calc(90vw / 3 - 5px);
+            height: calc(90vh / 3 - 5px);
+            cursor: pointer;
+            transition: all 0.5s ease-in-out;
+        }
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            pointer-events: none;
+        }
+        .expanded {
+            width: 80vw !important;
+            height: 80vh !important;
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="question-panel" id="questionPanel"></div>
+    <div class="video-wall" id="videoWall"></div>
+
+    <script>
+        const videoWall = document.getElementById("videoWall");
+        const questionPanel = document.getElementById("questionPanel");
+
+        // List of 9 YouTube Video IDs
+        const videoIds = [
+            "pamhhLu0utM", "1--0lGcnZm8", "2kjclezI0a4",
+            "bqvIMlBKNYY", "WyR_6xAa_Do", "QTzPPIwBzu4",
+            "_FR8gbgfUkU", "MokuKxMUge4", "FFvnZNj5bVQ"
+        ];
+
+        // List of random questions
+        const questions = [
+            "What is the speed of light?",
+            "Who discovered gravity?",
+            "What is the capital of France?",
+            "How many bones are in the human body?",
+            "What is the square root of 144?",
+            "Who painted the Mona Lisa?",
+            "What is the tallest mountain in the world?",
+            "Which planet is closest to the Sun?",
+            "Who wrote Hamlet?",
+            "How many continents are there on Earth?"
+        ];
+
+        // Create 3x3 grid of autoplay YouTube videos
+        const videoElements = videoIds.map((id, index) => {
+            const col = index % 3;
+            const row = Math.floor(index / 3);
+
+            const videoDiv = document.createElement("div");
+            videoDiv.classList.add("video-container");
+            videoDiv.style.left = `${col * (90 / 3)}vw`;
+            videoDiv.style.top = `${row * (90 / 3)}vh`;
+
+            videoDiv.innerHTML = `
+                <iframe src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&enablejsapi=1" allowfullscreen></iframe>
+            `;
+            videoWall.appendChild(videoDiv);
+            return videoDiv;
+        });
+
+        let expandedVideo = null;
+
+        function toggleVideo(video, expand) {
+            if (!expand) {
+                video.classList.remove("expanded");
+                video.style.left = video.dataset.originalLeft;
+                video.style.top = video.dataset.originalTop;
+                expandedVideo = null;
+            } else {
+                // Store original position
+                video.dataset.originalLeft = video.style.left;
+                video.dataset.originalTop = video.style.top;
+
+                // Shrink any already expanded video
+                if (expandedVideo) {
+                    expandedVideo.classList.remove("expanded");
+                    expandedVideo.style.left = expandedVideo.dataset.originalLeft;
+                    expandedVideo.style.top = expandedVideo.dataset.originalTop;
+                }
+
+                // Expand new video
+                video.classList.add("expanded");
+                video.style.left = "10vw";
+                video.style.top = "10vh";
+                expandedVideo = video;
+            }
+        }
+
+        function typeQuestion(question, callback) {
+            let i = 0;
+            questionPanel.textContent = "";
+            const interval = setInterval(() => {
+                questionPanel.textContent += question[i];
+                i++;
+                if (i === question.length) {
+                    clearInterval(interval);
+                    setTimeout(callback, 1000); // Wait before expanding video
+                }
+            }, 50);
+        }
+
+        function startCycle() {
+            const question = questions[Math.floor(Math.random() * questions.length)];
+            typeQuestion(question, () => {
+                const randomVideo = videoElements[Math.floor(Math.random() * videoElements.length)];
+                toggleVideo(randomVideo, true);
+
+                setTimeout(() => {
+                    toggleVideo(randomVideo, false);
+                    setTimeout(startCycle, 1000);
+                }, 10000); // Expand for 10 seconds
+            });
+        }
+
+        // Start the cycle when the page loads
+        startCycle();
+    </script>
+
+</body>
+</html>
