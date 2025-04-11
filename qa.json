@@ -1,0 +1,44 @@
+[
+    {
+        "question": "Why is the sky blue?",
+        "answer": "The sky appears blue due to Rayleigh scattering, where shorter blue wavelengths of sunlight are scattered in all directions by the gases in Earth's atmosphere more than other colors.",
+        "videoId": "TxC2Y_Iwtwk",
+        "title": "Why Is The Sky Blue?"
+    },
+    {
+        "question": "What is the capital of France?",
+        "answer": "The capital of France is Paris, known for its art, fashion, gastronomy and culture. The city is home to landmarks like the Eiffel Tower, Louvre Museum, and Notre-Dame Cathedral.",
+        "videoId": "DiPF2DSRT28",
+        "title": "Paris Travel Guide"
+    },
+    {
+        "question": "How do plants convert sunlight into energy?",
+        "answer": "Plants convert sunlight into energy through photosynthesis, using chlorophyll to absorb light and convert carbon dioxide and water into glucose and oxygen. This process is fundamental to life on Earth.",
+        "videoId": "UD48BTD4UNk",
+        "title": "Photosynthesis Explained"
+    },
+    {
+        "question": "What is the theory of relativity?",
+        "answer": "Einstein's theory of relativity consists of special relativity (about objects moving at constant speed) and general relativity (about gravity and acceleration), fundamentally changing our understanding of space and time.",
+        "videoId": "9umtvxQ-XR0",
+        "title": "Understanding Relativity"
+    },
+    {
+        "question": "How does the internet work?",
+        "answer": "The internet works through a global network of interconnected computers and servers that communicate using standardized protocols (TCP/IP) to transmit data in packets across various physical connections.",
+        "videoId": "TxC2Y_Iwtwk",
+        "title": "How The Internet Works"
+    },
+    {
+        "question": "What causes the seasons?",
+        "answer": "Seasons are caused by Earth's axial tilt (23.5°) as it orbits the Sun. Different parts of Earth receive more direct sunlight at different times of year, creating seasonal changes.",
+        "videoId": "K7u2b2FV84w",
+        "title": "Earth's Seasons Explained"
+    },   
+    {
+        "question": "How do vaccines work?",
+        "answer": "Vaccines work by stimulating the immune system to recognize and combat pathogens (viruses or bacteria) without causing the disease itself, providing immunity against future infections.",
+        "videoId": "97wme9L2TkM",
+        "title": "Vaccine Science Explained"
+    }
+]
