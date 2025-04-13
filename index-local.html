@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Flow | Interactive Q&A</title>
+    <link rel="stylesheet" href="styles-local.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="header">
+        <h1>100도 질문하기</h1>
+        <p>온도교회 설교 검색 (데모)</p>
+    </div>
+    
+    <div id="content">
+        <div id="text-container"></div>
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+    </div>
+    
+    <div id="coverflow-container">
+        <div id="coverflow"></div>
+    </div>
+    
+    <div id="video-overlay">
+        <button id="close-overlay">×</button>
+        <div id="video-overlay-content">
+            <video id="overlay-video" controls autoplay muted playsinline></video>
+
+        </div>
+    </div>
+
+    <script src="app-local.js"></script>
+
+    <audio id="type-sound" src="https://cdn.jsdelivr.net/gh/naptha/talktype@main/sfx/type.wav" preload="auto"></audio>
+</body>
+</html>
